@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.API_F_apiKey,
@@ -7,8 +8,9 @@ const firebaseConfig = {
   storageBucket: process.env.API_F_storageBucket,
   messagingSenderId: process.env.API_F_messagingSenderId,
   appId: process.env.API_F_appId,
-  measurementId: process.env.API_F_measurementId
+  measurementId: process.env.API_F_measurementId,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth();

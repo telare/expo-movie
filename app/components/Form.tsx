@@ -1,15 +1,12 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { btnStyle } from "@/assets/styles/btn";
-const FormSchema = z.object({
+import { StyleSheet, View } from "react-native";
+import SignUp from "./Form/SignUp";
+import LogIn from "./Form/LogIn";
+import { useEffect } from "react";
+import { userStore } from "@/store/userStore";
+export const FormSchema = z.object({
   nickName: z
     .string()
     .min(3, { message: "At least 3 characters" })
@@ -20,108 +17,29 @@ const FormSchema = z.object({
     message: "At least 4 maximum 10 characters",
   }),
 });
-type FormT = z.infer<typeof FormSchema>;
+export type FormT = z.infer<typeof FormSchema>;
 type FormProp = { type: "login" | "signup" };
 export default function Form({ type }: FormProp) {
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormT>({
+  const methods = useForm<FormT>({
     resolver: zodResolver(FormSchema),
   });
-  function sumbitData(data: FormT) {
-    console.log(data);
-  }
+  const userInfo = userStore();
+  useEffect(() => {
+    userInfo.setAuth(false);
+    userInfo.setNickName("user");
+    userInfo.setEmail("");
+  }, []);
 
   return (
-    <View style={styles.formCon}>
-      {type == "signup" ? (
-        <View>
-          <View style={styles.fieldCon}>
-            <Text style={styles.inputLabel}>NickName</Text>
-            <TextInput
-              defaultValue="simon12"
-              style={styles.input}
-              {...register("nickName")}
-              onChangeText={(nickName) => setValue("nickName", nickName)}
-            />
-          </View>
-          {errors.nickName && (
-            <Text style={styles.error}>{errors.nickName.message}</Text>
-          )}
-          <View style={styles.fieldCon}>
-            <Text style={styles.inputLabel}>Email</Text>
-            <TextInput
-              defaultValue="example@gmail.com"
-              style={styles.input}
-              {...register("email")}
-              onChangeText={(email) => setValue("email", email)}
-            />
-          </View>
-          {errors.email && (
-            <Text style={styles.error}>{errors.email.message}</Text>
-          )}
-          <View style={styles.fieldCon}>
-            <Text style={styles.inputLabel}>Password</Text>
-            <TextInput
-              defaultValue="secure_password)1234"
-              style={styles.input}
-              {...register("password")}
-              onChangeText={(password) => setValue("password", password)}
-            />
-          </View>
-          {errors.password && (
-            <Text style={styles.error}>{errors.password.message}</Text>
-          )}
-          <TouchableOpacity
-            style={btnStyle.btn}
-            onPress={handleSubmit(sumbitData)}
-          >
-            <Text style={btnStyle.text}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View>
-          <View style={styles.fieldCon}>
-            <Text style={styles.inputLabel}>E-mail</Text>
-            <TextInput
-              defaultValue="example@gmail.com"
-              style={styles.input}
-              {...register("email")}
-              onChangeText={(email) => setValue("email", email)}
-            />
-          </View>
-          {errors.email && (
-            <Text style={styles.error}>{errors.email.message}</Text>
-          )}
-          <View style={styles.fieldCon}>
-            <Text style={styles.inputLabel}>Password</Text>
-            <TextInput
-              defaultValue="securepassword1234"
-              style={styles.input}
-              {...register("password")}
-              onChangeText={(password) => setValue("password", password)}
-            />
-          </View>
-          {errors.password && (
-            <Text style={styles.error}>{errors.password.message}</Text>
-          )}
-
-          <TouchableOpacity
-            style={btnStyle.btn}
-            onPress={handleSubmit(sumbitData)}
-          >
-            <Text style={btnStyle.text}>Log In</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+    <View style={FromStyles.formCon}>
+      <FormProvider {...methods}>
+        {type == "signup" ? <SignUp /> : <LogIn />}
+      </FormProvider>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+export const FromStyles = StyleSheet.create({
   formCon: {
     backgroundColor: "#36558F",
     justifyContent: "center",
