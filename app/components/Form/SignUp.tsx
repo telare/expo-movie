@@ -1,5 +1,5 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { FormT, FromStyles } from "../Form";
+import { FormT, FormStyles } from "../Form";
 import { btnStyle } from "@/assets/styles/btn";
 import { useFormContext } from "react-hook-form";
 import { userStore } from "@/store/userStore";
@@ -36,43 +36,43 @@ export default function SignUp() {
   } = useFormContext<FormT>();
   return (
     <View>
-      <View style={FromStyles.fieldCon}>
-        <Text style={FromStyles.inputLabel}>NickName</Text>
+      <View style={FormStyles.fieldCon}>
+        <Text style={FormStyles.inputLabel}>NickName</Text>
         <TextInput
           placeholder="simon12"
-          style={FromStyles.input}
+          style={FormStyles.input}
           {...register("nickName")}
           onChangeText={(nickName) => setValue("nickName", nickName)}
         />
       </View>
       {errors.nickName && (
-        <Text style={FromStyles.error}>{errors.nickName.message}</Text>
+        <Text style={FormStyles.error}>{errors.nickName.message}</Text>
       )}
-      <View style={FromStyles.fieldCon}>
-        <Text style={FromStyles.inputLabel}>Email</Text>
+      <View style={FormStyles.fieldCon}>
+        <Text style={FormStyles.inputLabel}>Email</Text>
         <TextInput
           placeholder="example@gmail.com"
-          style={FromStyles.input}
+          style={FormStyles.input}
           {...register("email")}
           onChangeText={(email) => setValue("email", email)}
         />
       </View>
       {errors.email && (
-        <Text style={FromStyles.error}>{errors.email.message}</Text>
+        <Text style={FormStyles.error}>{errors.email.message}</Text>
       )}
-      <View style={FromStyles.fieldCon}>
-        <Text style={FromStyles.inputLabel}>Password</Text>
+      <View style={FormStyles.fieldCon}>
+        <Text style={FormStyles.inputLabel}>Password</Text>
         <TextInput
           secureTextEntry={true}
           placeholder="secure_password)1234"
           textContentType="password"
-          style={FromStyles.input}
+          style={FormStyles.input}
           {...register("password")}
           onChangeText={(password) => setValue("password", password)}
         />
       </View>
       {errors.password && (
-        <Text style={FromStyles.error}>{errors.password.message}</Text>
+        <Text style={FormStyles.error}>{errors.password.message}</Text>
       )}
       <TouchableOpacity style={btnStyle.btn} onPress={handleSubmit(sumbitData)}>
         <Text style={btnStyle.text}>Sign Up</Text>

@@ -28,7 +28,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      ["expo-font", 
+      {
+        "fonts":["./assets/fonts/Inter/static/Inter_24pt-Regular.otf"]
+      }]
+      
     ],
     "experiments": {
       "typedRoutes": true

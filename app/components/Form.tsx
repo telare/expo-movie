@@ -31,7 +31,7 @@ export default function Form({ type }: FormProp) {
   }, []);
 
   return (
-    <View style={FromStyles.formCon}>
+    <View style={FormStyles.formCon}>
       <FormProvider {...methods}>
         {type == "signup" ? <SignUp /> : <LogIn />}
       </FormProvider>
@@ -39,9 +39,9 @@ export default function Form({ type }: FormProp) {
   );
 }
 
-export const FromStyles = StyleSheet.create({
+export const FormStyles = StyleSheet.create({
   formCon: {
-    backgroundColor: "#36558F",
+    backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
@@ -54,6 +54,7 @@ export const FromStyles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "600",
     paddingLeft: 16,
+    fontFamily: "Inter_24pt-Regular.ttf",
   },
   input: {
     backgroundColor: "#96ACB7",
@@ -63,11 +64,13 @@ export const FromStyles = StyleSheet.create({
     fontSize: 20,
     height: 57,
     padding: 16,
+    fontFamily: "Inter_24pt-Regular.ttf",
   },
   error: {
     color: "red",
     fontSize: 16,
     fontWeight: "600",
     paddingLeft: 16,
+    fontFamily: "Inter_24pt-Regular.ttf",
   },
 });
