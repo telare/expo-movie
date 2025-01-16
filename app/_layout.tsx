@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import Header from "./components/Header";
-import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import store from "@/dataFetching.ts/store";
 

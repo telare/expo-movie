@@ -26,7 +26,7 @@ export default function Header({ title, isNavBtns }: HeaderProps) {
 
 const navStyles = StyleSheet.create({
   mainCon: {
-    backgroundColor: "#6C47DB",
+    backgroundColor: "black",
     height: 50,
     justifyContent: "center",
     flexDirection:"row",
@@ -61,6 +61,7 @@ const navStyles = StyleSheet.create({
   text: {
     fontFamily: "Inter_24pt-Regular.ttf",
     fontSize: 34,
+    color:"white",
     fontWeight: "700",
   },
 });

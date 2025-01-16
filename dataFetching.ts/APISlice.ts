@@ -48,18 +48,18 @@ export const movieApi = createApi({
       headers.set("accept", "application/json");
       headers.set(
         "Authorization",
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNmJiYjliNjI3ZmVkMTczNGU0ZWJkMmY1NmY0NGVmMCIsIm5iZiI6MTczNjcwNjc1NS4wODE5OTk4LCJzdWIiOiI2Nzg0MGFjMzE0MzFlMDU5MWFiYjkyOGQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.xs0o2K-s2WQzOjSjuxeOLzEeIvRInmwzYAsxbDuYCIg"
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjEwM2E4NDBlYjE1ZjdiZmExZjMwODgxNjAxNDhiMSIsIm5iZiI6MTczNjkzMDY3Mi43ODQ5OTk4LCJzdWIiOiI2Nzg3NzU3MGFiYWJiYmEwNDBiYmM5N2UiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.PvBXbLZZycv8CtkZ7cKgkGxw26M06aw9B-_Fq9YFuCQ"
       );
       return headers;
     },
   }),
   endpoints: (builder) => ({
-    getNowPlayingMovie: builder.query<MovieResponse, string>({
-      query: (region) =>
-        `movie/now_playing?language=en-US&page=1&region=${region}`,
+    getNowPlayingMovie: builder.query<MovieResponse, number>({
+      query: (page) =>
+        `movie/now_playing?language=en-US&page=${page+1}&region=US`,
     }),
-    getTopRatedMovie: builder.query<MovieResponse, string>({
-      query: () => `movie/top_rated?language=en-US&page=1`,
+    getTopRatedMovie: builder.query<MovieResponse, number>({
+      query: (page) => `movie/top_rated?language=en-US&page=${page+1}`,
     }),
     getMovieByTitle: builder.query<MovieResponse, string>({
       query: (title) => `search/movie?query=${title}&language=en-US&page=1`,
@@ -68,8 +68,8 @@ export const movieApi = createApi({
       query: () => `person/popular?language=en-US&page=1`,
     }),
 
-    getMovieInfo: builder.query<Movie & MovieDetails, string>({
-      query: (movie_id) => `movie/${movie_id}?&language=en-US`,
+    getMovieInfo: builder.query<Movie & MovieDetails, number>({
+      query: (movie_id) => `movie/${movie_id}?language=en-US`,
     }),
     getPersonInfo: builder.query<Person & PersonDetails, string>({
       query: (person_id) => `person/${person_id}?&language=en-US`,

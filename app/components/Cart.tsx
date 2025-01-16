@@ -79,6 +79,7 @@ const cartStyles = StyleSheet.create({
     shadowOpacity: 0.67,
     shadowRadius: 23,
     elevation: 22,
+    
   },
   img: {
     width: 160,
@@ -102,7 +103,7 @@ const cartStyles = StyleSheet.create({
   vote: {
     fontFamily: "Inter_24pt-Regular.ttf",
     fontSize: 15,
-    fontWeight: "300",
+    fontWeight: "500",
   },
   goodVote: {
     color: "green",
