@@ -3,11 +3,15 @@ import { useForm } from "react-hook-form";
 import { Image } from "react-native";
 import { Text } from "react-native";
 import { useRouter } from "expo-router";
+import { useSearchParams } from "expo-router/build/hooks";
 type Search = {
   input: string;
 };
+
 export default function Search() {
   const router = useRouter();
+  const params = useSearchParams();
+
   const {
     register,
     setValue,
@@ -29,6 +33,9 @@ export default function Search() {
       <View style={searchStyles.inputCon}>
         <TextInput
           placeholder="Search movies by title ..."
+          defaultValue={
+            params.get("query") ? (params.get("query") as string) : undefined
+          }
           style={
             errors.input
               ? [searchStyles.input, searchStyles.error]
@@ -41,7 +48,7 @@ export default function Search() {
         />
         <TouchableOpacity onPress={handleSubmit(sumbitInput)}>
           <Image
-            source={require("../../../assets/images/search.png")}
+            source={require("../../assets/images/search.png")}
             style={searchStyles.searchIcon}
           />
         </TouchableOpacity>
@@ -64,6 +71,7 @@ export default function Search() {
 const searchStyles = StyleSheet.create({
   mainCon: {
     alignItems: "center",
+    marginTop: 20,
   },
   inputCon: {
     width: "100%",

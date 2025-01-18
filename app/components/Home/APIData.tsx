@@ -9,10 +9,11 @@ import { useState } from "react";
 import Cart from "../Cart";
 import Pagination from "../Pagination";
 type APIdataProps = {
-  content: "nowPlaying" | "topRated";
+  content: "nowMovies" | "topMovies";
 };
 export default function APIdata({ content }: APIdataProps) {
   //api handling
+
   const [currentPage, setCurrentPage] = useState<number>(0);
   const {
     data: nowMovies,
@@ -26,16 +27,16 @@ export default function APIdata({ content }: APIdataProps) {
   } = useGetTopRatedMovieQuery(currentPage);
 
   const moviesCutted: Movie[] | undefined =
-    nowMovies && content == "nowPlaying"
-      ? nowMovies.results.slice(0, 4)
-      : topMovies?.results.slice(0, 4);
-
+  nowMovies && content == "nowMovies"
+    ? nowMovies.results.slice(0, 4)
+    : topMovies?.results.slice(0, 4);
+  
   //pagination functions
 
   function handleNextClick() {
     setCurrentPage(currentPage > 0 ? currentPage - 1 : 0);
   }
-  function handlePageClick(index:number) {
+  function handlePageClick(index: number) {
     setCurrentPage(index);
   }
   function handleBackClick() {

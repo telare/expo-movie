@@ -2,24 +2,31 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
 
 type HeaderProps = {
-  title: string;
   isNavBtns: boolean;
 };
-export default function Header({ title, isNavBtns }: HeaderProps) {
+export default function Header({ isNavBtns }: HeaderProps) {
   const router = useRouter();
   return (
     <View style={navStyles.mainCon}>
-      {isNavBtns && (
-        <TouchableOpacity style={navStyles.btn} onPress={() => router.back()}>
+      {isNavBtns ? (
+        <TouchableOpacity
+          style={navStyles.navBtn}
+          onPress={() => router.back()}
+        >
           <Image
             source={require("../../assets/images/left-arrow.png")}
             style={navStyles.img}
           />
         </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={navStyles.navBtn}>
+          <Image
+            source={require("../../assets/images/menu.png")}
+            style={navStyles.img}
+          />
+        </TouchableOpacity>
       )}
-      <View style={isNavBtns ? navStyles.conT : navStyles.con}>
-        <Text style={navStyles.text}>{title}</Text>
-      </View>
+      
     </View>
   );
 }
@@ -28,40 +35,23 @@ const navStyles = StyleSheet.create({
   mainCon: {
     backgroundColor: "black",
     height: 50,
-    justifyContent: "center",
-    flexDirection:"row",
+    gap: 85,
+    flexDirection: "row",
     alignItems: "center",
   },
-  con: {
-    width: 357,
-    justifyContent: "center",
-    flexDirection: "row",
-  },
-  conT: {
-    width: 357,
-    justifyContent: "center",
-    paddingRight:60,
-    flexDirection: "row",
-  },
+
   img: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
   },
-  btn: {
+  navBtn: {
     backgroundColor: "#6C47DB",
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 13,
-    display: "flex",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    marginLeft: 10,
-  },
-  text: {
-    fontFamily: "Inter_24pt-Regular.ttf",
-    fontSize: 34,
-    color:"white",
-    fontWeight: "700",
+    marginLeft: 15,
   },
 });
