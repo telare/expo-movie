@@ -15,13 +15,16 @@ export default function BottomTab({
   const barIcons: ImageSourcePropType[] = [
     require("../../../assets/images/home.png"),
     require("../../../assets/images/user.png"),
+    require("../../../assets/images/favorite.png"),
   ];
+  const tabs: string[] = ["home", "profile", "favorite"];
   return (
     <View style={bottomTabBar.mainCon}>
       <View style={bottomTabBar.barCon}>
-        {state.routes.map((route, i) => (
+        {tabs.map((tab, i) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate(route.name)}
+            key={i}
+            onPress={() => navigation.navigate(tab)}
             style={bottomTabBar.barItem}
           >
             <Image source={barIcons[i]} style={bottomTabBar.barIcon} />

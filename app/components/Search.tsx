@@ -24,7 +24,7 @@ export default function Search() {
       data.input = data.input.replaceAll(" ", "%20");
     }
     router.push({
-      pathname: "/screens/search_results",
+      pathname: "/(tabs)/search_results",
       params: { query: data.input },
     });
   }

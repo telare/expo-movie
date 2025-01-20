@@ -23,19 +23,20 @@ export default function LogIn() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   function socialAuth(provider: "google" | "x") {
     setIsLoading(true);
-
     signInWithPopup(
       auth,
       provider == "google" ? googleProvider : twitterProvider
     )
       .then((result) => {
         const user = result.user;
+        console.log(user);
+        userInfo.setProfileURL(user.photoURL);
         userInfo.setNickName(user.displayName ? user.displayName : "user");
         userInfo.setEmail(
           user.email ? user.email : "email-non-found@gmail.com"
         );
         userInfo.setAuth(true);
-        router.replace("/screens/home");
+        router.replace("/(tabs)/home");
       })
       .catch((error) => {
         router.push({
@@ -53,7 +54,7 @@ export default function LogIn() {
         const user = userCredential.user;
         userInfo.setNickName("user");
         userInfo.setEmail(data.email);
-        router.replace("/screens/home");
+        router.replace("/(tabs)/home");
       })
       .catch((error) => {
         router.push({

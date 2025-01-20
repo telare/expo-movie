@@ -5,16 +5,16 @@ import APIdata from "../components/Home/APIData";
 
 export default function Home() {
   return (
-    <SafeAreaView>
-      <ScrollView style={homeStyles.mainCon}>
+    <SafeAreaView style={homeStyles.mainCon}>
+      <ScrollView>
         <View style={homeStyles.ImgCarouselCon}>
           <ImgCarousel />
         </View>
 
         <Search />
         <View style={{ marginBottom: 30 }}>
-          <APIdata content="nowMovies" />
-          <APIdata content="topMovies" />
+          <APIdata  type="now_playing"  title="Now Playing"/>
+          <APIdata  type="top_rated"  title="Top rated"/>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -22,6 +22,7 @@ export default function Home() {
 }
 const homeStyles = StyleSheet.create({
   mainCon: {
+    flex: 1,
     backgroundColor: "black",
   },
   ImgCarouselCon: {

@@ -29,11 +29,21 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      ["expo-font", 
-      {
-        "fonts":["./assets/fonts/Inter/static/Inter_24pt-Regular.otf"]
-      }]
-      
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Inter/static/Inter_24pt-Regular.otf"
+          ]
+        }
+      ],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

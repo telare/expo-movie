@@ -21,13 +21,11 @@ export type MovieDetails = {
   runtime: number;
   homepage: string;
 };
-export type MovieResponse = {
-  results: Movie[];
-};
 
 export type Person = {
   id: number;
   name: string;
+  profile_path:string;
 };
 export type PersonDetails = {
   biography: string;
@@ -36,8 +34,12 @@ export type PersonDetails = {
   name: string;
   place_of_birth: string;
 };
-type PersonResponse = {
-  results: Person[];
+
+
+export type Params = {
+  object: "movie" | "search" | "person";
+  type: "now_playing" | "top_rated";
+  page: number;
 };
 
 export const movieApi = createApi({
@@ -54,33 +56,36 @@ export const movieApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getNowPlayingMovie: builder.query<MovieResponse, number>({
-      query: (page) =>
-        `movie/now_playing?language=en-US&page=${page+1}&region=US`,
+    //Movie
+    getMovieLists:builder.query<{results:Movie[]}, {type:"now_playing" | "top_rated", page:number}>({
+      query:({type, page})=>`/movie/${type}?language=en-US&page=${page+1}`
     }),
-    getTopRatedMovie: builder.query<MovieResponse, number>({
-      query: (page) => `movie/top_rated?language=en-US&page=${page+1}`,
-    }),
-    getMovieByTitle: builder.query<MovieResponse, string>({
-      query: (title) => `search/movie?query=${title}&language=en-US&page=1`,
-    }),
-    getPopularPerson: builder.query<PersonResponse, string>({
-      query: () => `person/popular?language=en-US&page=1`,
+    getMovieDetails:builder.query<Movie & MovieDetails, {movie_id:number, page:number}>({
+      query:({movie_id, page})=>`movie/${movie_id}?language=en-US&page=${page+1}`
+    }), 
+    searchMovie:builder.query<{results:Movie[]},string>({
+      query:(query)=>`/search/movie?query=${query}`
+    }), 
+
+    getMovie:builder.query<{results:Movie[]}, {type:"now_playing" | "top_rated" | "search", page:number, query:string| null}>({
+      query:({type, page, query}) =>{
+        if(type !== "search"){
+          return `/movie/${type}?language=en-US&page=${page+1}`
+        }else {
+          return `/search/movie?query=${query !== null ? query :''}&page=${page+1}`
+        }
+      }
     }),
 
-    getMovieInfo: builder.query<Movie & MovieDetails, number>({
-      query: (movie_id) => `movie/${movie_id}?language=en-US`,
+    //Person
+    getPopularPerson:builder.query<{results:Person[]},number>({
+      query:(page)=>`person/popular?page=${page+1}`
     }),
-    getPersonInfo: builder.query<Person & PersonDetails, string>({
-      query: (person_id) => `person/${person_id}?&language=en-US`,
-    }),
+    searchPerson:builder.query<{results:Person[]},string>({
+      query:(query)=>`/search/person?query=${query}`
+    }), 
+
   }),
 });
-export const {
-  useGetNowPlayingMovieQuery,
-  useGetTopRatedMovieQuery,
-  useGetPopularPersonQuery,
-  useGetMovieByTitleQuery,
-  useGetMovieInfoQuery,
-  useGetPersonInfoQuery,
-} = movieApi;
+
+export const { useGetMovieListsQuery,useGetMovieDetailsQuery, useLazySearchMovieQuery, useGetMovieQuery  } = movieApi;

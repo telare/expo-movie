@@ -20,7 +20,7 @@ export default function SignUp() {
         } else {
           userInfo.setEmail(data.email);
         }
-        router.replace("/screens/home");
+        router.replace("/(tabs)/home");
       })
       .catch((error) => {
         const errorCode: string = error.code;

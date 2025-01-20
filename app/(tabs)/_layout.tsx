@@ -1,34 +1,25 @@
 import { Tabs } from "expo-router";
 import BottomTab from "../components/BottomBar/BottomBar";
 export default function TabLayout() {
-  const tabs: string[] = ["home", "profile"];
+  const tabs: string[] = [
+    "home",
+    "profile",
+    "search_results",
+    "details",
+    "error",
+    "favorite"
+  ];
   return (
     <Tabs tabBar={(props) => <BottomTab {...props} />}>
-      <Tabs.Screen
-        name="home"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="search_results"
-        options={{
-          headerShown: false,
-        }}
-      />
-      
-      <Tabs.Screen
-        name="error"
-        options={{
-          headerShown: false,
-        }}
-      />
+      {tabs.map((tab, i) => (
+        <Tabs.Screen
+          key={i}
+          name={tab}
+          options={{
+            headerShown: false,
+          }}
+        />
+      ))}
     </Tabs>
   );
 }

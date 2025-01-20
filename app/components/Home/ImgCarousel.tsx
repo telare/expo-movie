@@ -15,18 +15,19 @@ export default function ImgCarousel() {
 
   const [currentImgIndex, setCurrentImgIndex] = useState<number>(1);
   function handleCarouselSideClick(direction: "right" | "left") {
-    if (currentImgIndex > 0 && currentImgIndex < 2) {
+    if (currentImgIndex >= 0 && currentImgIndex <= 2) {
       if (direction == "left") {
-        setCurrentImgIndex((prev) => prev - 1);
+        setCurrentImgIndex(currentImgIndex > 0 ? currentImgIndex - 1 : 0
+          );
       } else {
-        setCurrentImgIndex((prev) => prev + 1);
+        setCurrentImgIndex(currentImgIndex !==2 ? currentImgIndex + 1 : 2);
       }
     }
     
   }
-  // useEffect(() => {
-  //   console.log(currentImgIndex);
-  // }, [currentImgIndex]);
+  useEffect(() => {
+    console.log(currentImgIndex);
+  }, [currentImgIndex]);
 
   return (
     <View style={ImgCarouselStyles.mainCon}>

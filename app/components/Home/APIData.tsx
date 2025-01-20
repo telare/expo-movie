@@ -1,37 +1,33 @@
-import {
-  Movie,
-  useGetNowPlayingMovieQuery,
-  useGetTopRatedMovieQuery,
-} from "@/dataFetching.ts/APISlice";
+import { Movie, Person, useGetMovieQuery } from "@/dataFetching.ts/APISlice";
 import { StyleSheet, Text, View } from "react-native";
 import Loading from "../Loading";
 import { useState } from "react";
-import Cart from "../Cart";
+import MovieCart from "../MovieCart";
 import Pagination from "../Pagination";
-type APIdataProps = {
-  content: "nowMovies" | "topMovies";
-};
-export default function APIdata({ content }: APIdataProps) {
-  //api handling
+import { useSearchParams } from "expo-router/build/hooks";
 
+type APIdataProps = {
+  title: string;
+  type: "now_playing" | "top_rated" | "search";
+};
+
+export default function APIdata({ type, title }: APIdataProps) {
+  const params: string | null = useSearchParams().get("query");
   const [currentPage, setCurrentPage] = useState<number>(0);
   const {
-    data: nowMovies,
-    isLoading: nowMoviesLoading,
-    isError: nowMoviesError,
-  } = useGetNowPlayingMovieQuery(currentPage);
-  const {
-    data: topMovies,
-    isLoading: TopMoviesLoading,
-    isError: TopMoviesError,
-  } = useGetTopRatedMovieQuery(currentPage);
+    data: movies,
+    isLoading,
+    isError,
+  } = useGetMovieQuery({
+    type: type,
+    page: currentPage,
+    query: params ? params : null
+  });
 
-  const moviesCutted: Movie[] | undefined =
-  nowMovies && content == "nowMovies"
-    ? nowMovies.results.slice(0, 4)
-    : topMovies?.results.slice(0, 4);
-  
-  //pagination functions
+  const cuttedData: Movie[] | Person[] | undefined = movies?.results.slice(
+    0,
+    4
+  );
 
   function handleNextClick() {
     setCurrentPage(currentPage > 0 ? currentPage - 1 : 0);
@@ -43,23 +39,25 @@ export default function APIdata({ content }: APIdataProps) {
     setCurrentPage(currentPage !== 3 ? currentPage + 1 : 3);
   }
 
-  if (nowMoviesLoading || TopMoviesLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
     <View style={nowPlayingMoviesStyles.mainCon}>
-      <Text style={nowPlayingMoviesStyles.title}>Now Playing</Text>
+      <Text style={nowPlayingMoviesStyles.title}>{title}</Text>
       <View style={nowPlayingMoviesStyles.gridCon}>
-        {moviesCutted ? (
-          moviesCutted.map((movie) => (
-            <Cart
+        {cuttedData ? (
+          cuttedData.map((movie) => (
+            <MovieCart
               key={movie.id}
-              type="movie"
               id={movie.id}
-              title={movie.title}
+              overview={movie.overview}
               poster_path={movie.poster_path}
+              release_date={movie.release_date}
+              title={movie.title}
               vote_average={movie.vote_average}
+              vote_count={movie.vote_count}
             />
           ))
         ) : (
