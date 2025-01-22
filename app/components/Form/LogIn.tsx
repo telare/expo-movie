@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { useFormContext } from "react-hook-form";
 import { FormT, FormStyles } from "../Form";
-import { btnStyle } from "@/assets/styles/btn";
 import { userStore } from "@/store/userStore";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider, twitterProvider } from "@/firebaseConfig";
@@ -16,6 +15,7 @@ import { useRouter } from "expo-router";
 import Or from "../Or";
 import Loading from "../Loading";
 import { useState } from "react";
+import Button from "../Button";
 
 export default function LogIn() {
   const userInfo = userStore();
@@ -40,7 +40,7 @@ export default function LogIn() {
       })
       .catch((error) => {
         router.push({
-          pathname: "/screens/error",
+          pathname: "/(tabs)/error",
           params: { code: error.code, message: error.message },
         });
       })
@@ -58,7 +58,7 @@ export default function LogIn() {
       })
       .catch((error) => {
         router.push({
-          pathname: "/screens/error",
+          pathname: "/(tabs)/error",
           params: { code: error.code, message: error.message },
         });
       });
@@ -100,36 +100,38 @@ export default function LogIn() {
       {errors.password && (
         <Text style={FormStyles.error}>{errors.password.message}</Text>
       )}
-
-      <TouchableOpacity
-        style={[btnStyle.btn, { marginBottom: 10 }]}
-        onPress={handleSubmit(sumbitData)}
-      >
-        <Text style={btnStyle.text}>Log In</Text>
-      </TouchableOpacity>
-
+      <Button
+        title="Log In"
+        fontSize={25}
+        backgroundColor="#6C47DB"
+        height={50}
+        width={350}
+        borderRadius={10}
+        func={handleSubmit(sumbitData)}
+      />
       <Or />
-
       <View style={loginStyles.btnsCon}>
-        <Text style={btnStyle.text}>Login with</Text>
-
-        <TouchableOpacity
-          style={btnStyle.btn}
-          onPress={() => socialAuth("google")}
-        >
-          <Image
-            source={require("../../../assets/images/google.png")}
-            style={loginStyles.socialImg}
-          />
-          <Text style={btnStyle.text}>Google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={btnStyle.btn} onPress={() => socialAuth("x")}>
-          <Image
-            source={require("../../../assets/images/twitter.png")}
-            style={loginStyles.socialImg}
-          />
-          <Text style={btnStyle.text}>X</Text>
-        </TouchableOpacity>
+        <Text>Login with</Text>
+        <Button
+          title="Google"
+          fontSize={25}
+          height={50}
+          width={350}
+          backgroundColor="#6C47DB"
+          borderRadius={10}
+          func={() => socialAuth("google")}
+          image={require("../../../assets/images/google.png")}
+        />
+        <Button
+          title="X"
+          fontSize={25}
+          height={50}
+          width={350}
+          backgroundColor="#6C47DB"
+          borderRadius={10}
+          func={() => socialAuth("x")}
+          image={require("../../../assets/images/twitter.png")}
+        />
       </View>
     </View>
   );

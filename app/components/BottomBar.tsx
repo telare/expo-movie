@@ -1,34 +1,32 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import Button from "./Button";
 export default function BottomTab({
   state,
   descriptors,
   navigation,
 }: BottomTabBarProps) {
   const barIcons: ImageSourcePropType[] = [
-    require("../../../assets/images/home.png"),
-    require("../../../assets/images/user.png"),
-    require("../../../assets/images/favorite.png"),
+    require("../../assets/images/home.png"),
+    require("../../assets/images/search.png"),
+    require("../../assets/images/user.png"),
+   
   ];
-  const tabs: string[] = ["home", "profile", "favorite"];
+  const tabs: string[] = ["home","search", "profile" ];
   return (
     <View style={bottomTabBar.mainCon}>
       <View style={bottomTabBar.barCon}>
         {tabs.map((tab, i) => (
-          <TouchableOpacity
+          <Button
             key={i}
-            onPress={() => navigation.navigate(tab)}
-            style={bottomTabBar.barItem}
-          >
-            <Image source={barIcons[i]} style={bottomTabBar.barIcon} />
-          </TouchableOpacity>
+            fontSize={25}
+            height={50}
+            backgroundColor="#37246e"
+            borderRadius={10}
+            width={50}
+            func={() => navigation.navigate(tab)}
+            image={barIcons[i]}
+          />
         ))}
       </View>
     </View>

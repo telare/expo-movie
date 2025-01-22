@@ -60,8 +60,8 @@ export const movieApi = createApi({
     getMovieLists:builder.query<{results:Movie[]}, {type:"now_playing" | "top_rated", page:number}>({
       query:({type, page})=>`/movie/${type}?language=en-US&page=${page+1}`
     }),
-    getMovieDetails:builder.query<Movie & MovieDetails, {movie_id:number, page:number}>({
-      query:({movie_id, page})=>`movie/${movie_id}?language=en-US&page=${page+1}`
+    getMovieDetails:builder.query<Movie & MovieDetails, number>({
+      query:(movie_id)=>`movie/${movie_id}?language=en-US`
     }), 
     searchMovie:builder.query<{results:Movie[]},string>({
       query:(query)=>`/search/movie?query=${query}`

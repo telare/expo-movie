@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import Search from "../components/Search";
-import APIdata from "../components/Home/APIData";
+import APIdata from "../components/APIData";
 
 export default function SearchResults() {
   return (

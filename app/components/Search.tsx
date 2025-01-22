@@ -1,9 +1,9 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { useForm } from "react-hook-form";
-import { Image } from "react-native";
 import { Text } from "react-native";
 import { useRouter } from "expo-router";
 import { useSearchParams } from "expo-router/build/hooks";
+import Button from "./Button";
 type Search = {
   input: string;
 };
@@ -20,6 +20,7 @@ export default function Search() {
   } = useForm<Search>();
 
   function sumbitInput(data: Search) {
+    console.log(data);
     if (data.input.includes(" ")) {
       data.input = data.input.replaceAll(" ", "%20");
     }
@@ -46,12 +47,13 @@ export default function Search() {
           })}
           onChangeText={(inputValue) => setValue("input", inputValue)}
         />
-        <TouchableOpacity onPress={handleSubmit(sumbitInput)}>
-          <Image
-            source={require("../../assets/images/search.png")}
-            style={searchStyles.searchIcon}
-          />
-        </TouchableOpacity>
+        <Button
+          image={require("../../assets/images/search.png")}
+          
+          width={50}
+          height={50}
+          func={handleSubmit(sumbitInput)}
+        />
       </View>
       {errors.input && (
         <Text

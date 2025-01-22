@@ -1,7 +1,6 @@
 import { Movie, Person } from "@/dataFetching.ts/APISlice";
 import { userStore } from "@/store/userStore";
 import { Link } from "expo-router";
-import { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Cart({
@@ -13,10 +12,11 @@ export default function Cart({
   vote_average,
   vote_count,
 }: Movie) {
-  // const userFavorite: (Movie | Person)[] = userStore().favorite;
-  // const addToFavorite: (by: Movie | Person) => void = userStore().setFavorite;
-  // const ids: number[] = userFavorite.map((favorite)=>favorite.id)
-
+  const userFavorite = userStore().favorite.movies;
+  const addToFavorite: (by: Movie) => void = userStore().setFavorite;
+  const ids: number[] = userFavorite.map((favorite) => favorite.id);
+  
+  
   return (
     <View>
       <View style={cartStyles.mainCon}>
@@ -27,8 +27,22 @@ export default function Cart({
             }}
             style={cartStyles.img}
           />
-          {/* <TouchableOpacity style={cartStyles.favoriteBtn}>
-            {ids.includes(typedProps.id) ? (
+          <TouchableOpacity
+            style={cartStyles.favoriteBtn}
+            
+            onPress={() =>
+              addToFavorite({
+                id,
+                overview,
+                poster_path,
+                release_date,
+                title,
+                vote_average,
+                vote_count,
+              })
+            }
+          >
+            {ids.includes(id) ? (
               <Image
                 source={require("../../assets/images/favoriteActive.png")}
                 style={{ width: 30, height: 35 }}
@@ -39,7 +53,7 @@ export default function Cart({
                 style={{ width: 30, height: 35 }}
               />
             )}
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
 
         <View style={cartStyles.textCon}>
@@ -58,7 +72,7 @@ export default function Cart({
             <Text
               style={[
                 cartStyles.vote,
-                vote_average && vote_average >= 7 && vote_average <= 5
+                 vote_average >= 7 
                   ? cartStyles.goodVote
                   : cartStyles.badVote,
               ]}
@@ -68,16 +82,6 @@ export default function Cart({
           </Text>
         </View>
       </View>
-
-      {/* <View style={cartStyles.mainCon}>
-          <Image
-            source={{ uri: `https://image.tmdb.org/t/p/w500${typedProps?.profile_path}` }}
-            style={cartStyles.img}
-          />
-          <TouchableOpacity>
-            <Text style={cartStyles.title}>{typedProps?.name}</Text>
-          </TouchableOpacity>
-        </View> */}
     </View>
   );
 }

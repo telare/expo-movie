@@ -1,4 +1,4 @@
-import { useGetMovieInfoQuery } from "@/dataFetching.ts/APISlice";
+import { useGetMovieDetailsQuery } from "@/dataFetching.ts/APISlice";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Loading from "../components/Loading";
 import { useSearchParams } from "expo-router/build/hooks";
@@ -10,7 +10,7 @@ export default function Details() {
     data: movieInfo,
     isLoading,
     isError,
-  } = useGetMovieInfoQuery(params.get("id") ? Number(params.get("id")) : 200);
+  } = useGetMovieDetailsQuery(params.get("id") ? Number(params.get("id")) : 200);
 
   const movieDetails: {
     title: string;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Image,
   ImageRequireSource,
@@ -6,56 +6,48 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-export default function ImgCarousel() {
-  const imgsArr: ImageRequireSource[] = [
-    require("../../../assets/images/img1.jpg"),
-    require("../../../assets/images/img2.jpg"),
-    require("../../../assets/images/img3.jpg"),
-  ];
+import Button from "./Button";
 
+type Slider = {
+  images: ImageRequireSource[];
+};
+
+export default function ImgCarousel({ images }: Slider) {
   const [currentImgIndex, setCurrentImgIndex] = useState<number>(1);
+
   function handleCarouselSideClick(direction: "right" | "left") {
     if (currentImgIndex >= 0 && currentImgIndex <= 2) {
       if (direction == "left") {
-        setCurrentImgIndex(currentImgIndex > 0 ? currentImgIndex - 1 : 0
-          );
+        setCurrentImgIndex(currentImgIndex > 0 ? currentImgIndex - 1 : 0);
       } else {
-        setCurrentImgIndex(currentImgIndex !==2 ? currentImgIndex + 1 : 2);
+        setCurrentImgIndex(currentImgIndex !== 2 ? currentImgIndex + 1 : 2);
       }
     }
-    
   }
-  useEffect(() => {
-    console.log(currentImgIndex);
-  }, [currentImgIndex]);
 
   return (
     <View style={ImgCarouselStyles.mainCon}>
       <View style={ImgCarouselStyles.con}>
         <Image
           style={ImgCarouselStyles.carouselImg}
-          source={imgsArr[currentImgIndex]}
+          source={images[currentImgIndex]}
         />
         <View style={ImgCarouselStyles.btnsCon}>
-          <TouchableOpacity
-            style={ImgCarouselStyles.btn}
-            onPress={() => handleCarouselSideClick("left")}
-          >
-            <Image
-              style={ImgCarouselStyles.btnImg}
-              source={require("../../../assets/images/left-arrow.png")}
-            />
-          </TouchableOpacity>
+          <Button
+            title="<"
+            fontSize={30}
+            height={30}
+            width={30}
+            func={() => handleCarouselSideClick("left")}
+          />
 
-          <TouchableOpacity
-            style={ImgCarouselStyles.btn}
-            onPress={() => handleCarouselSideClick("right")}
-          >
-            <Image
-              style={ImgCarouselStyles.btnImg}
-              source={require("../../../assets/images/right-arrow.png")}
-            />
-          </TouchableOpacity>
+          <Button
+            title=">"
+            fontSize={30}
+            height={30}
+            width={30}
+            func={() => handleCarouselSideClick("right")}
+          />
         </View>
       </View>
       <View style={ImgCarouselStyles.paginationCon}>
@@ -63,7 +55,7 @@ export default function ImgCarousel() {
           .fill(0)
           .map((_, i) => (
             <TouchableOpacity
-            key={i}
+              key={i}
               style={
                 currentImgIndex === i
                   ? [

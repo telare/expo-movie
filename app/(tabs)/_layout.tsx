@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import BottomTab from "../components/BottomBar/BottomBar";
+import BottomTab from "../components/BottomBar";
 export default function TabLayout() {
   const tabs: string[] = [
     "home",

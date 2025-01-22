@@ -1,31 +1,15 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
+import Button from "./Button";
 
-type HeaderProps = {
-  isNavBtns: boolean;
-};
-export default function Header({ isNavBtns }: HeaderProps) {
+
+export default function Header() {
   const router = useRouter();
   return (
     <View style={navStyles.mainCon}>
-      {isNavBtns ? (
-        <TouchableOpacity
-          style={navStyles.navBtn}
-          onPress={() => router.back()}
-        >
-          <Image
-            source={require("../../assets/images/left-arrow.png")}
-            style={navStyles.img}
-          />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={navStyles.navBtn}>
-          <Image
-            source={require("../../assets/images/menu.png")}
-            style={navStyles.img}
-          />
-        </TouchableOpacity>
-      )}
+      
+        
+      <Button func={() => router.back()} image={require("../../assets/images/left-arrow.png")} height={40} width={40} backgroundColor="#6C47DB" borderRadius={10}/>
       
     </View>
   );

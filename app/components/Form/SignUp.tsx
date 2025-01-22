@@ -1,11 +1,11 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { FormT, FormStyles } from "../Form";
-import { btnStyle } from "@/assets/styles/btn";
 import { useFormContext } from "react-hook-form";
 import { userStore } from "@/store/userStore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
+import Button from "../Button";
 
 export default function SignUp() {
   const router = useRouter();
@@ -74,9 +74,15 @@ export default function SignUp() {
       {errors.password && (
         <Text style={FormStyles.error}>{errors.password.message}</Text>
       )}
-      <TouchableOpacity style={btnStyle.btn} onPress={handleSubmit(sumbitData)}>
-        <Text style={btnStyle.text}>Sign Up</Text>
-      </TouchableOpacity>
+      <Button
+        title="Sign Up"
+        fontSize={25}
+        height={50}
+        backgroundColor="#6C47DB"
+        width={350}
+        borderRadius={10}
+        func={() => handleSubmit(sumbitData)}
+      />
     </View>
   );
 }

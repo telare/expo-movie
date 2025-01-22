@@ -1,10 +1,10 @@
-
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Button from "./Button";
 type PaginationProps = {
   totalPages: number;
   currentPage: number;
   handleNextClick: () => void;
-  handlePageClick: (i: number)=>void;
+  handlePageClick: (i: number) => void;
   handleBackClick: () => void;
 };
 export default function Pagination({
@@ -16,35 +16,59 @@ export default function Pagination({
 }: PaginationProps) {
   return (
     <View style={paginationStyles.mainCon}>
-      <TouchableOpacity style={paginationStyles.btn} onPress={handleNextClick}>
-        <Text style={paginationStyles.text}>{"<"}</Text>
-      </TouchableOpacity>
+      <Button
+        func={() => handleNextClick}
+        title="<"
+        height={30}
+        width={30}
+        fontSize={20}
+        borderColor="white"
+        borderWidth={2}
+        borderRadius={5}
+      />
+
       {Array(totalPages)
         .fill("")
-        .map((_, index) => (
-          <TouchableOpacity
-            key={index}
-            style={
-              currentPage === index
-                ? [paginationStyles.btn, paginationStyles.currentBtn]
-                : paginationStyles.btn
-            }
-            onPress={()=>handlePageClick(index)}
-          >
-            <Text
-              style={
-                currentPage === index
-                  ? [paginationStyles.text, paginationStyles.currentText]
-                  : paginationStyles.text
-              }
-            >
-              {index}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      <TouchableOpacity style={paginationStyles.btn} onPress={handleBackClick}>
-        <Text style={paginationStyles.text}>{">"}</Text>
-      </TouchableOpacity>
+        .map((_, index) => {
+          if (currentPage === index) {
+            return (
+              <Button
+                func={() => handlePageClick(index)}
+                key={index}
+                title={index.toString()}
+                height={30}
+                width={30}
+                fontSize={20}
+                backgroundColor="#432c8a"
+                borderRadius={5}
+              />
+            );
+          } else {
+            return (
+              <Button
+                func={() => handlePageClick(index)}
+                key={index}
+                title={index.toString()}
+                height={30}
+                width={30}
+                fontSize={20}
+                borderColor="white"
+                borderWidth={2}
+                borderRadius={5}
+              />
+            );
+          }
+        })}
+      <Button
+        func={() => handleBackClick}
+        title=">"
+        height={30}
+        width={30}
+        fontSize={20}
+        borderColor="white"
+        borderWidth={2}
+        borderRadius={5}
+      />
     </View>
   );
 }
@@ -55,30 +79,5 @@ const paginationStyles = StyleSheet.create({
     gap: 10,
     width: "100%",
     justifyContent: "center",
-  },
-  btn: {
-    borderWidth: 2,
-    borderColor: "white",
-    width: 30,
-    height: 30,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    color: "white",
-    fontFamily: "Inter_24pt-Regular.ttf",
-    fontWeight: "600",
-  },
-  currentText: {
-    color: "white",
-    fontSize:20, 
-    fontWeight: "600",
-  },
-  currentBtn: {
-    backgroundColor: "#432c8a",
-    borderColor:"#432c8a",
-    borderWidth:4,
-    width: 35,
-    height: 35,
   },
 });

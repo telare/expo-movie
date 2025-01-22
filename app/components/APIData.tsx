@@ -1,9 +1,9 @@
 import { Movie, Person, useGetMovieQuery } from "@/dataFetching.ts/APISlice";
 import { StyleSheet, Text, View } from "react-native";
-import Loading from "../Loading";
+import Loading from "./Loading";
 import { useState } from "react";
-import MovieCart from "../MovieCart";
-import Pagination from "../Pagination";
+import MovieCart from "./MovieCart";
+import Pagination from "./Pagination";
 import { useSearchParams } from "expo-router/build/hooks";
 
 type APIdataProps = {
