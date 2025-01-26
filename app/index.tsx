@@ -12,6 +12,7 @@ export default function Auth() {
     userInfo.setNickName("user");
     userInfo.setEmail("");
   }, []);
+  
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.title}>Expo{"\n"}Movie</Text>

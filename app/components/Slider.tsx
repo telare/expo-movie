@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Image,
-  ImageRequireSource,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -9,7 +8,7 @@ import {
 import Button from "./Button";
 
 type Slider = {
-  images: ImageRequireSource[];
+  images: string[];
 };
 
 export default function ImgCarousel({ images }: Slider) {
@@ -30,7 +29,8 @@ export default function ImgCarousel({ images }: Slider) {
       <View style={ImgCarouselStyles.con}>
         <Image
           style={ImgCarouselStyles.carouselImg}
-          source={images[currentImgIndex]}
+          // source={images[currentImgIndex]}
+          source={{uri:images[currentImgIndex]}}
         />
         <View style={ImgCarouselStyles.btnsCon}>
           <Button

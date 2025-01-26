@@ -2,10 +2,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StyleSheet, View } from "react-native";
-import SignUp from "./Form/SignUp";
-import LogIn from "./Form/LogIn";
-import { useEffect } from "react";
-import { userStore } from "@/store/userStore";
+import SignUp from "./Forms/SignUp";
+import LogIn from "./Forms/LogIn";
 export const FormSchema = z.object({
   nickName: z
     .string()
@@ -19,21 +17,17 @@ export const FormSchema = z.object({
 });
 export type FormT = z.infer<typeof FormSchema>;
 type FormProp = { type: "login" | "signup" };
+
 export default function Form({ type }: FormProp) {
   const methods = useForm<FormT>({
     resolver: zodResolver(FormSchema),
   });
-  const userInfo = userStore();
-  useEffect(() => {
-    userInfo.setAuth(false);
-    userInfo.setNickName("user");
-    userInfo.setEmail("");
-  }, []);
+  
 
   return (
     <View style={FormStyles.formCon}>
       <FormProvider {...methods}>
-        {type == "signup" ? <SignUp /> : <LogIn />}
+        {type == "signup" ? <SignUp /> : <LogIn/>}
       </FormProvider>
     </View>
   );

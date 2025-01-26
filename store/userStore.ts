@@ -11,6 +11,7 @@ export type User = {
     persons: Person[];
   };
   auth: boolean;
+
   setNickName: (by: string) => void;
   setEmail: (by: string) => void;
   setProfileURL: (by: string | null) => void;
@@ -35,32 +36,33 @@ export const userStore = create<User>()(
       setFavorite: (by) =>
         set((state) => {
           if ("title" in by) {
-            const index = state.favorite.movies.findIndex((movie)=>movie.id === by.id)
-            console.log(index)
-            if(index === -1){
+            const index = state.favorite.movies.findIndex(
+              (movie) => movie.id === by.id
+            );
+            if (index === -1) {
               return {
-                favorite:{
+                favorite: {
                   ...state.favorite,
-                  movies: [...state.favorite.movies,by as Movie]
-                }
-              }
-            }else {
-              state.favorite.movies.splice(index,1)
-              
+                  movies: [...state.favorite.movies, by as Movie],
+                },
+              };
+            } else {
+              state.favorite.movies.splice(index, 1);
+
               return {
-                favorite:{
+                favorite: {
                   ...state.favorite,
-                  movies: [...state.favorite.movies]
-                }
-              }
+                  movies: [...state.favorite.movies],
+                },
+              };
             }
-          } else{
+          } else {
             return {
-              favorite:{
+              favorite: {
                 ...state.favorite,
-                persons:[...state.favorite.persons, by as Person]
-              }
-            }
+                persons: [...state.favorite.persons, by as Person],
+              },
+            };
           }
         }),
       setAuth: (by) => set(() => ({ auth: by })),

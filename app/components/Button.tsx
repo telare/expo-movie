@@ -1,4 +1,5 @@
 import {
+  DimensionValue,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -9,13 +10,18 @@ import {
 type Btn = {
   title?: string;
   image?: ImageSourcePropType;
-  width: number;
-  height: number;
+  width: DimensionValue;
+  height: DimensionValue;
   fontSize?: number;
   backgroundColor?: string;
   borderRadius?: number;
   borderColor?: string;
   borderWidth?: number;
+  position?: "absolute" | "relative";
+  top?: DimensionValue;
+  bottom?: DimensionValue;
+  left?: DimensionValue;
+  right?: DimensionValue;
   func: () => void;
 };
 
@@ -29,6 +35,11 @@ export default function Button({
   borderRadius,
   borderColor,
   borderWidth,
+  position,
+  top,
+  bottom,
+  left,
+  right,
   func,
 }: Btn) {
   return (
@@ -40,7 +51,12 @@ export default function Button({
           backgroundColor: backgroundColor ? backgroundColor : undefined,
           borderRadius: borderRadius ? borderRadius : 0,
           borderColor: borderColor ? borderColor : undefined,
-          borderWidth : borderWidth ? borderWidth : 0
+          borderWidth: borderWidth ? borderWidth : 0,
+          position: position ? position : undefined,
+          top: top ? top : undefined,
+          bottom: bottom ? bottom : undefined,
+          left: left ? left : undefined,
+          right: right ? right : undefined,
         },
         btnStyles.mainCon,
       ]}
@@ -61,7 +77,6 @@ const btnStyles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     gap: 10,
-    
   },
 
   text: {

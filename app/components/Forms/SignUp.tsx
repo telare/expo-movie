@@ -6,14 +6,22 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
 import Button from "../Button";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignUp() {
   const router = useRouter();
   const userInfo = userStore((state) => state);
+
+  
   function sumbitData(data: FormT) {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
+        const userInfoObj = {
+          name:data.nickName? data.nickName : "user",
+          email:data.email,
+        }
+        AsyncStorage.setItem('user', JSON.stringify(userInfoObj));
         if (data.nickName) {
           userInfo.setNickName(data.nickName);
           userInfo.setEmail(data.email);
@@ -81,7 +89,7 @@ export default function SignUp() {
         backgroundColor="#6C47DB"
         width={350}
         borderRadius={10}
-        func={() => handleSubmit(sumbitData)}
+        func={handleSubmit(sumbitData)}
       />
     </View>
   );

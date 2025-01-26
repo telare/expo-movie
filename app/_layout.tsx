@@ -18,13 +18,13 @@ export default function RootLayout() {
         <Stack.Screen
           name="screens/login"
           options={{
-            header: () => <Header isNavBtns={true} />,
+            header: () => <Header  />,
           }}
         />
         <Stack.Screen
           name="screens/signup"
           options={{
-            header: () => <Header isNavBtns={true} />,
+            header: () => <Header  />,
           }}
         />
       </Stack>

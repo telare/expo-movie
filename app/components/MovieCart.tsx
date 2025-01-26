@@ -1,7 +1,8 @@
-import { Movie, Person } from "@/dataFetching.ts/APISlice";
+import { Movie } from "@/dataFetching.ts/APISlice";
 import { userStore } from "@/store/userStore";
 import { Link } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Button from "./Button";
 
 export default function Cart({
   id,
@@ -15,8 +16,7 @@ export default function Cart({
   const userFavorite = userStore().favorite.movies;
   const addToFavorite: (by: Movie) => void = userStore().setFavorite;
   const ids: number[] = userFavorite.map((favorite) => favorite.id);
-  
-  
+
   return (
     <View>
       <View style={cartStyles.mainCon}>
@@ -27,10 +27,8 @@ export default function Cart({
             }}
             style={cartStyles.img}
           />
-          <TouchableOpacity
-            style={cartStyles.favoriteBtn}
-            
-            onPress={() =>
+          <Button
+            func={() =>
               addToFavorite({
                 id,
                 overview,
@@ -41,19 +39,18 @@ export default function Cart({
                 vote_count,
               })
             }
-          >
-            {ids.includes(id) ? (
-              <Image
-                source={require("../../assets/images/favoriteActive.png")}
-                style={{ width: 30, height: 35 }}
-              />
-            ) : (
-              <Image
-                source={require("../../assets/images/favorite.png")}
-                style={{ width: 30, height: 35 }}
-              />
-            )}
-          </TouchableOpacity>
+            image={
+              ids.includes(id)
+                ? require("../../assets/images/favoriteActive.png")
+                : require("../../assets/images/favorite.png")
+            }
+            width={30}
+            height={35}
+            backgroundColor={undefined}
+            position="absolute"
+            top={10}
+            right={10}
+          />
         </View>
 
         <View style={cartStyles.textCon}>
@@ -72,9 +69,7 @@ export default function Cart({
             <Text
               style={[
                 cartStyles.vote,
-                 vote_average >= 7 
-                  ? cartStyles.goodVote
-                  : cartStyles.badVote,
+                vote_average >= 7 ? cartStyles.goodVote : cartStyles.badVote,
               ]}
             >
               {vote_average.toPrecision(2)}

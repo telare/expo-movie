@@ -4,7 +4,7 @@ import Statistic from "../components/Profile/Statistic";
 
 export default function Profile() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex:1, backgroundColor:"black"}}>
       <PersonalInfo />
       <Statistic />
     </SafeAreaView>

@@ -2,22 +2,20 @@ import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import Slider from "../components/Slider";
 import Search from "../components/Search";
 import APIdata from "../components/APIData";
-import { ImageRequireSource } from "react-native";
 
 export default function Home() {
-  const images: ImageRequireSource[] = [
-    require("../../assets/images/img1.jpg"),
-    require("../../assets/images/img2.jpg"),
-    require("../../assets/images/img3.jpg"),
+  const images: string[] = [
+    `https://image.tmdb.org/t/p/w500/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg`,
+    `https://image.tmdb.org/t/p/w500/fYnEbgoNCxW9kL0IgOgtJb9JTBU.jpg`,
+    `https://image.tmdb.org/t/p/w500/xZm5YUNY3PlYD1Q4k7X8zd2V4AK.jpg`,
   ];
-
+  
   return (
     <SafeAreaView style={homeStyles.mainCon}>
       <ScrollView>
         <View style={homeStyles.ImgCarouselCon}>
           <Slider images={images} />
         </View>
-
         <Search />
         <View style={{ marginBottom: 30 }}>
           <APIdata type="now_playing" title="Now Playing" />

@@ -1,15 +1,28 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { View } from "react-native";
 import Form from "../components/Form";
 
+
 export default function LogIn() {
+  
   return (
-    <View style={styles.mainCon}>
+    <View style={loginStyles.mainCon}>
       <Form type="login"/>
     </View>
-  );
+  )
 }
-const styles = StyleSheet.create({
-  mainCon:{
-    flex: 1
-  }
-})
+
+export const loginStyles = StyleSheet.create({
+  mainCon: {
+    flex: 1,
+  },
+  socialImg: {
+    width: 20,
+    height: 20,
+  },
+  btnsCon: {
+    marginTop: 10,
+    justifyContent: "space-around",
+    gap: 10,
+  },
+});

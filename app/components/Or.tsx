@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   line: {
     marginTop:14,
-    width: 123,
+    width:123,
     height: 2,
     backgroundColor: "white",
   },
