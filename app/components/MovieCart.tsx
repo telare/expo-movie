@@ -1,8 +1,8 @@
 import { Movie } from "@/dataFetching.ts/APISlice";
-import { userStore } from "@/store/userStore";
 import { Link } from "expo-router";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import Button from "./Button";
+import { addToFavorite } from "@/supabaseConfig";
 
 export default function Cart({
   id,
@@ -13,9 +13,7 @@ export default function Cart({
   vote_average,
   vote_count,
 }: Movie) {
-  const userFavorite = userStore().favorite.movies;
-  const addToFavorite: (by: Movie) => void = userStore().setFavorite;
-  const ids: number[] = userFavorite.map((favorite) => favorite.id);
+  
 
   return (
     <View>
@@ -28,22 +26,16 @@ export default function Cart({
             style={cartStyles.img}
           />
           <Button
-            func={() =>
-              addToFavorite({
-                id,
-                overview,
-                poster_path,
-                release_date,
-                title,
-                vote_average,
-                vote_count,
-              })
-            }
-            image={
-              ids.includes(id)
-                ? require("../../assets/images/favoriteActive.png")
-                : require("../../assets/images/favorite.png")
-            }
+            // func={() =>
+            //   addToFavorite(, {
+            //     id,
+            //   })
+            // }
+            // image={
+            //   ids.includes(id)
+            //     ? require("../../assets/images/favoriteActive.png")
+            //     : require("../../assets/images/favorite.png")
+            // }
             width={30}
             height={35}
             backgroundColor={undefined}

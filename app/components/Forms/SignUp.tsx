@@ -1,35 +1,39 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { FormT, FormStyles } from "../Form";
 import { useFormContext } from "react-hook-form";
-import { userStore } from "@/store/userStore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
 import Button from "../Button";
+import { registerUser } from "@/supabaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignUp() {
   const router = useRouter();
-  const userInfo = userStore((state) => state);
 
-  
   function sumbitData(data: FormT) {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        const userInfoObj = {
-          name:data.nickName? data.nickName : "user",
-          email:data.email,
-        }
-        AsyncStorage.setItem('user', JSON.stringify(userInfoObj));
-        if (data.nickName) {
-          userInfo.setNickName(data.nickName);
-          userInfo.setEmail(data.email);
-        } else {
-          userInfo.setEmail(data.email);
-        }
-        router.replace("/(tabs)/home");
+        AsyncStorage.setItem(
+          "user",
+          JSON.stringify({
+            nickname: data.nickName ? data.nickName : "user",
+            email: data.email,
+          })
+        );
+        registerUser({
+          nickname: data.nickName ? data.nickName : "user",
+          email: data.email,
+        });
       })
+      .then(() =>
+        AsyncStorage.setItem(
+          "userNickName",
+          data.nickName ? data.nickName : "user"
+        )
+      )
+      .then(() => router.replace("/(tabs)/home"))
       .catch((error) => {
         const errorCode: string = error.code;
         const errorMessage: string = error.message;

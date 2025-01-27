@@ -2,15 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import Or from "./components/Or";
 import { useEffect } from "react";
-import { userStore } from "@/store/userStore";
 import Button from "./components/Button";
 export default function Auth() {
   const router = useRouter();
-  const userInfo = userStore();
   useEffect(() => {
-    userInfo.setAuth(false);
-    userInfo.setNickName("user");
-    userInfo.setEmail("");
+    
+    
+    // userInfo.setAuth(false);
+    // userInfo.setNickName("user");
+    // userInfo.setEmail("");
   }, []);
   
   return (

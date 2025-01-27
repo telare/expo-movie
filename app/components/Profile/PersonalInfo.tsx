@@ -1,39 +1,51 @@
-import { userStore } from "@/store/userStore";
-import { Text } from "react-native";
-import { StyleSheet } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text } from "react-native";
 import { Image, View } from "react-native";
 
 export default function PersonalInfo() {
-  const userInfo = userStore();
-  const profilePhoto: string | null = userInfo.profileURL;
+  const [userInfo, setUserInfo] = useState<{
+    nickname: string;
+    email: string;
+    photoUrl:string
+  }>();
+  useEffect(() => {
+    AsyncStorage.getItem("user").then((result) => {
+      if (result) {
+        setUserInfo(JSON.parse(result));
+      }
+    });
+  }, []);
+ 
   const userData: {
     title: string;
     value: string;
   }[] = [
-    { title: "NickName", value: userInfo.nickname },
-    { title: "E-mail", value: userInfo.email },
+    { title: "NickName", value: userInfo ? userInfo.nickname : "user" },
+    { title: "E-mail", value: userInfo ? userInfo.email : "example@gmail.com" },
   ];
   return (
     <View style={profileStyles.mainCon}>
       <Image
         style={profileStyles.image}
         source={
-          profilePhoto
-            ? { uri: profilePhoto }
+          userInfo
+            ? { uri: userInfo.photoUrl }
             : require("../../../assets/images/user.png")
         }
       />
-      <View style={{marginLeft:'5%'}}>
-      {userData.map((data, i) => (
-         <View>
-          <Text key={i} style={profileStyles.title}>
-            {data.title}
-          </Text>
-          <Text key={i} style={profileStyles.text}>
-            {data.value}
-          </Text>
+      <View style={{ marginLeft: "5%" }}>
+        {userData.map((data, i) => (
+          <View key={i}>
+            <Text  style={profileStyles.title}>
+              {data.title}
+            </Text>
+            <Text  style={profileStyles.text}>
+              {data.value}
+            </Text>
           </View>
-      ))}
+        ))}
       </View>
     </View>
   );
