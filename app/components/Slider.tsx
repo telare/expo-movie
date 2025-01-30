@@ -1,11 +1,7 @@
 import { useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Button from "./Button";
+import GestureRecognizer from "react-native-swipe-gestures";
 
 type Slider = {
   images: string[];
@@ -26,11 +22,15 @@ export default function ImgCarousel({ images }: Slider) {
 
   return (
     <View style={ImgCarouselStyles.mainCon}>
-      <View style={ImgCarouselStyles.con}>
+      <GestureRecognizer
+        style={ImgCarouselStyles.con}
+        onSwipeLeft={() => handleCarouselSideClick("right")}
+        onSwipeRight={() => handleCarouselSideClick("left")}
+      >
         <Image
           style={ImgCarouselStyles.carouselImg}
           // source={images[currentImgIndex]}
-          source={{uri:images[currentImgIndex]}}
+          source={{ uri: images[currentImgIndex] }}
         />
         <View style={ImgCarouselStyles.btnsCon}>
           <Button
@@ -49,7 +49,8 @@ export default function ImgCarousel({ images }: Slider) {
             func={() => handleCarouselSideClick("right")}
           />
         </View>
-      </View>
+      </GestureRecognizer>
+
       <View style={ImgCarouselStyles.paginationCon}>
         {Array(3)
           .fill(0)

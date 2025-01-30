@@ -7,7 +7,7 @@ export default function TabLayout() {
     "search_results",
     "details",
     "error",
-    "favorite"
+    "search",
   ];
   return (
     <Tabs tabBar={(props) => <BottomTab {...props} />}>

@@ -3,6 +3,7 @@ import Info from "../components/Details/Info";
 import Rating from "../components/Details/Rating";
 
 export default function Details() {
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       <ScrollView>

@@ -33,7 +33,6 @@ export default function Info() {
     value: string | number | undefined;
   }[] = [
     { title: "Title", value: movieInfo?.title },
-    { title: "Id", value: movieInfo?.id },
     { title: "Release data", value: movieInfo?.release_date },
     { title: "Run time", value: `${movieInfo?.runtime} m` },
     {

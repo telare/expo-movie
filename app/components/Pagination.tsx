@@ -17,7 +17,7 @@ export default function Pagination({
   return (
     <View style={paginationStyles.mainCon}>
       <Button
-        func={() => handleNextClick}
+        func={handleNextClick}
         title="<"
         height={30}
         width={30}
@@ -33,7 +33,7 @@ export default function Pagination({
           if (currentPage === index) {
             return (
               <Button
-                func={() => handlePageClick(index)}
+                func={()=>handlePageClick(index)}
                 key={index}
                 title={index.toString()}
                 height={30}
@@ -46,7 +46,7 @@ export default function Pagination({
           } else {
             return (
               <Button
-                func={() => handlePageClick(index)}
+                func={()=>handlePageClick(index)}
                 key={index}
                 title={index.toString()}
                 height={30}
@@ -60,7 +60,7 @@ export default function Pagination({
           }
         })}
       <Button
-        func={() => handleBackClick}
+        func={handleBackClick}
         title=">"
         height={30}
         width={30}

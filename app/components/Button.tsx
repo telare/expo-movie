@@ -25,38 +25,12 @@ type Btn = {
   func: () => void;
 };
 
-export default function Button({
-  title,
-  image,
-  width,
-  height,
-  fontSize,
-  backgroundColor,
-  borderRadius,
-  borderColor,
-  borderWidth,
-  position,
-  top,
-  bottom,
-  left,
-  right,
-  func,
-}: Btn) {
+export default function Button({ func, image, title, fontSize, ...rest }: Btn) {
   return (
     <TouchableOpacity
       style={[
         {
-          width: width,
-          height: height,
-          backgroundColor: backgroundColor ? backgroundColor : undefined,
-          borderRadius: borderRadius ? borderRadius : 0,
-          borderColor: borderColor ? borderColor : undefined,
-          borderWidth: borderWidth ? borderWidth : 0,
-          position: position ? position : undefined,
-          top: top ? top : undefined,
-          bottom: bottom ? bottom : undefined,
-          left: left ? left : undefined,
-          right: right ? right : undefined,
+          ...rest,
         },
         btnStyles.mainCon,
       ]}

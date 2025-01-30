@@ -1,45 +1,61 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ImageRequireSource } from "react-native";
 
 export type Movie = {
   id: number;
   title: string;
-  overview: string;
   poster_path: string;
-  release_date: string;
   vote_average: number;
-  vote_count: number;
+};
+export type Tv = {
+  id: number;
+  name: string;
+  poster_path: string;
+  vote_average: number;
+};
+export type Person = {
+  id: number;
+  name: string;
+  profile_path: string;
 };
 export type MovieDetails = {
   genres: {
     id: number;
     name: string;
   }[];
+  overview: string;
+  release_date: string;
   production_companies: {
     name: string;
     origin_country: string;
   };
   runtime: number;
-  homepage: string;
 };
 
-export type Person = {
-  id: number;
-  name: string;
-  profile_path: string;
+export type TvDetails = {
+  created_by: {
+    id: number;
+    name: string;
+  }[];
+
+  first_air_date: string;
+  overview: string;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  production_companies: {
+    name: string;
+    origin_country: string;
+  };
 };
+
 export type PersonDetails = {
   biography: string;
   birthday: string;
   known_for_department: string;
-  name: string;
   place_of_birth: string;
-};
-
-export type Params = {
-  object: "movie" | "search" | "person";
-  type: "now_playing" | "top_rated";
-  page: number;
 };
 
 export const movieApi = createApi({
@@ -56,21 +72,18 @@ export const movieApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    //Movie
-    getMovieLists: builder.query<
-      { results: Movie[] },
-      { type: "now_playing" | "top_rated"; page: number }
+    //General
+    getTrending: builder.query<
+      Movie[] | Person[] | Tv[],
+      { page: number; type: "movie" | "person" | "tv" }
     >({
-      query: ({ type, page }) =>
-        `/movie/${type}?language=en-US&page=${page + 1}`,
+      query: ({ page, type }) =>
+        `trending/${type}/day?language=en-US&page=${page + 1}`,
+      transformResponse: (response: { results: Movie[] | Person[] | Tv[] }) => {
+        const result: Movie[] | Person[] | Tv[] = response.results.slice(0, 4);
+        return result;
+      },
     }),
-    getMovieDetails: builder.query<Movie & MovieDetails, number>({
-      query: (movie_id) => `movie/${movie_id}?language=en-US`,
-    }),
-    searchMovie: builder.query<{ results: Movie[] }, string>({
-      query: (query) => `/search/movie?query=${query}`,
-    }),
-
     getImgs: builder.query<
       string[],
       { type: "movie" | "person" | "tv"; id: number }
@@ -87,50 +100,49 @@ export const movieApi = createApi({
         return newResp;
       },
     }),
-    getMovie: builder.query<
-      { results: Movie[] },
-      {
-        type: "now_playing" | "top_rated" | "search";
-        page: number;
-        query: string | null;
-      }
-    >({
-      query: ({ type, page, query }) => {
-        if (type !== "search") {
-          return `/movie/${type}?language=en-US&page=${page + 1}`;
-        } else {
-          return `/search/movie?query=${query !== null ? query : ""}&page=${
-            page + 1
-          }`;
-        }
-      },
+
+    //Movies
+    getMovieDetails: builder.query<Movie & MovieDetails, number>({
+      query: (id) => `/movie/${id}?language=en-US`,
+    }),
+    searchMovie: builder.query<{ results: Movie[] }, string>({
+      query: (query) => `/search/movie?query=${query}`,
     }),
     addRating: builder.mutation<
-      Movie,
+      Movie | Tv,
       { id: number; to: "movie" | "tv"; body: { value: number } }
     >({
-      query: ({ to, id,body }) => ({
+      query: ({ to, id, body }) => ({
         url: `/${to}/${id}/rating`,
         method: "POST",
-        body:body
+        body: body,
       }),
     }),
 
-    //Person
-    getPopularPerson: builder.query<{ results: Person[] }, number>({
-      query: (page) => `person/popular?page=${page + 1}`,
+    //TV
+    getTv: builder.query<Tv & TvDetails, number>({
+      query: (id) => `/tv/${id}?language=en-US`,
     }),
-    searchPerson: builder.query<{ results: Person[] }, string>({
+    searchTv: builder.query<{ results: Tv[] }, string>({
+      query: (query) => `/search/tv?query=${query}`,
+    }),
+
+    //Persons
+    getPersonsDetails: builder.query<Movie & MovieDetails, number>({
+      query: (id) => `/person/${id}?language=en-US`,
+    }),
+    searchPersons: builder.query<{ results: Movie[] }, string>({
       query: (query) => `/search/person?query=${query}`,
     }),
   }),
 });
 
 export const {
-  useGetMovieListsQuery,
+  useGetTrendingQuery,
   useGetMovieDetailsQuery,
-  useSearchMovieQuery,
+  useGetTvQuery,
+  useGetPersonsDetailsQuery,
+  useSearchPersonsQuery,
   useAddRatingMutation,
   useGetImgsQuery,
-  useGetMovieQuery,
 } = movieApi;

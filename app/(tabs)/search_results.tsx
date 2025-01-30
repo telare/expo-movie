@@ -11,8 +11,8 @@ export default function SearchResults() {
   );
 }
 const searchResultStyles = StyleSheet.create({
-    mainCon:{
-        flex:1, 
-        backgroundColor:"black"
-    }
-})
+  mainCon: {
+    flex: 1,
+    backgroundColor: "black",
+  }
+});

@@ -78,11 +78,6 @@ const cartStyles = StyleSheet.create({
     height: 250,
     backgroundColor: "white",
     borderRadius: 23,
-    shadowColor: "rgba(255, 255, 255, 1)",
-    shadowOffset: { width: 2, height: 1 },
-    shadowOpacity: 0.67,
-    shadowRadius: 23,
-    elevation: 22,
   },
   img: {
     width: 160,
