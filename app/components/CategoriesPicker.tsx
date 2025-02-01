@@ -11,10 +11,11 @@ export default function CategoriesPicker({
   const categories: string[] = ["movie", "tv", "person", "all"];
   return (
     <View style={CategoryPickerStyles.mainCon}>
-      {categories.map((category) => {
+      {categories.map((category, i) => {
         if (category !== pickedCategory) {
           return (
             <Button
+              key={i}
               title={category}
               func={() => setPickedCategory(category)}
               height="90%"
@@ -28,6 +29,7 @@ export default function CategoriesPicker({
         } else {
           return (
             <Button
+              key={i}
               title={category}
               func={() => setPickedCategory(category)}
               height="90%"

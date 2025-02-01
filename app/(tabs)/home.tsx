@@ -68,7 +68,7 @@ export default function Home() {
         </View>
 
         <Search />
-        <View style={{ height: "3%", marginTop: "3%" }}>
+        <View style={{ maxHeight: "8%", marginTop: "3%" }}>
           <CategoriesPicker
             pickedCategory={pickedCategory}
             setPickedCategory={setPickedCategory}

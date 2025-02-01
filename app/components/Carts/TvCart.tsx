@@ -4,8 +4,17 @@ import { View } from "react-native";
 import Button from "../Button";
 import { Tv } from "@/dataFetching.ts/APISlice";
 import { cartStyles } from "./MovieCart";
+import { addToFavorite } from "@/supabaseConfig";
 
-export default function TvCart({ id, name, poster_path, vote_average }: Tv) {
+export default function TvCart({
+  id,
+  name,
+  poster_path,
+  vote_average,
+  nickname,
+}: Tv & {
+  nickname: string;
+}) {
   return (
     <View style={cartStyles.mainCon}>
       <View style={cartStyles.imgCon}>
@@ -16,16 +25,18 @@ export default function TvCart({ id, name, poster_path, vote_average }: Tv) {
           style={cartStyles.img}
         />
         <Button
-          // func={() =>
-          //   addToFavorite(, {
-          //     id,
-          //   })
-          // }
+          func={() =>
+            addToFavorite(nickname, {
+              id: id,
+              type: "tv",
+            })
+          }
           // image={
           //   ids.includes(id)
           //     ? require("../../assets/images/favoriteActive.png")
           //     : require("../../assets/images/favorite.png")
           // }
+
           width={30}
           height={35}
           backgroundColor={undefined}
@@ -39,7 +50,7 @@ export default function TvCart({ id, name, poster_path, vote_average }: Tv) {
         <Link
           href={{
             pathname: "/(tabs)/details",
-            params: { id: id },
+            params: { type: "tv", id: id },
           }}
         >
           <Text style={cartStyles.title} numberOfLines={2}>

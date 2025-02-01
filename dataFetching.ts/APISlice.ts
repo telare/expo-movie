@@ -84,33 +84,54 @@ export const movieApi = createApi({
         return result;
       },
     }),
+
+    getDetails: builder.query<
+      (Movie & MovieDetails) | (Tv & TvDetails) | (Person & PersonDetails),
+      { type: string; id: number }
+    >({
+      query: ({ type, id }) => `/${type}/${id}?language=en-US`,
+    }),
+
     getImgs: builder.query<
       string[],
       { type: "movie" | "person" | "tv"; id: number }
     >({
       query: ({ type, id }) => `/${type}/${id}/images`,
-      transformResponse: (response: {
-        backdrops: {
-          file_path: string;
-        }[];
-      }) => {
-        const newResp: string[] = response.backdrops.map(
-          (path) => `https://image.tmdb.org/t/p/w500/${path.file_path}`
-        );
-        return newResp;
+      transformResponse: (
+        response:
+          | {
+              backdrops: {
+                file_path: string;
+              }[];
+            }
+          | {
+              profiles: {
+                file_path: string;
+              }[];
+            }
+      ) => {
+        if ("backdrops" in response) {
+          const newResp: string[] = response.backdrops.map(
+            (path) => `https://image.tmdb.org/t/p/w500/${path.file_path}`
+          );
+          return newResp;
+        } else {
+          const newResp: string[] = response.profiles.map(
+            (path) => `https://image.tmdb.org/t/p/w500/${path.file_path}`
+          );
+          return newResp;
+        }
       },
     }),
 
     //Movies
-    getMovieDetails: builder.query<Movie & MovieDetails, number>({
-      query: (id) => `/movie/${id}?language=en-US`,
-    }),
+
     searchMovie: builder.query<{ results: Movie[] }, string>({
       query: (query) => `/search/movie?query=${query}`,
     }),
     addRating: builder.mutation<
       Movie | Tv,
-      { id: number; to: "movie" | "tv"; body: { value: number } }
+      { id: number; to: string; body: { value: number } }
     >({
       query: ({ to, id, body }) => ({
         url: `/${to}/${id}/rating`,
@@ -120,17 +141,11 @@ export const movieApi = createApi({
     }),
 
     //TV
-    getTv: builder.query<Tv & TvDetails, number>({
-      query: (id) => `/tv/${id}?language=en-US`,
-    }),
     searchTv: builder.query<{ results: Tv[] }, string>({
       query: (query) => `/search/tv?query=${query}`,
     }),
 
     //Persons
-    getPersonsDetails: builder.query<Movie & MovieDetails, number>({
-      query: (id) => `/person/${id}?language=en-US`,
-    }),
     searchPersons: builder.query<{ results: Movie[] }, string>({
       query: (query) => `/search/person?query=${query}`,
     }),
@@ -139,9 +154,7 @@ export const movieApi = createApi({
 
 export const {
   useGetTrendingQuery,
-  useGetMovieDetailsQuery,
-  useGetTvQuery,
-  useGetPersonsDetailsQuery,
+  useGetDetailsQuery,
   useSearchPersonsQuery,
   useAddRatingMutation,
   useGetImgsQuery,

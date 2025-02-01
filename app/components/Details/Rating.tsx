@@ -1,14 +1,14 @@
 import { useAddRatingMutation } from "@/dataFetching.ts/APISlice";
-import { useSearchParams } from "expo-router/build/hooks";
 import { StyleSheet, Text, View } from "react-native";
 import Button from "../Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { paramsContext } from "@/app/(tabs)/details";
 
 export default function Rating() {
-  const params: URLSearchParams = useSearchParams();
+  const params = useContext(paramsContext);
   const [rating, setRating] = useState<number>(5.0);
   const [addRating] = useAddRatingMutation();
-
+ 
   function IncreaseRating() {
     if (rating !== 10.0) {
       setRating((prev) => parseFloat((prev + 0.5).toFixed(1)));
@@ -20,9 +20,9 @@ export default function Rating() {
     }
   }
   function submitRating() {
-    const id: number = Number(params.get("id"));
-    const to = "movie";
-    addRating({ id: id, to: to, body: { value: rating } });
+    const id: number = params.id;
+    const type = params.type;
+    addRating({ id: id, to: type, body: { value: rating } });
   }
 
   return (

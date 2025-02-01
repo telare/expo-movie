@@ -2,13 +2,21 @@ import { Movie } from "@/dataFetching.ts/APISlice";
 import { Link } from "expo-router";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Button from "../Button";
+import getFavoriteInfo, { addToFavorite } from "@/supabaseConfig";
 
 export default function MovieTvCart({
   id,
   poster_path,
   title,
   vote_average,
-}: Movie) {
+  nickname,
+}: Movie & {
+  nickname: string;
+}) {
+  // const favoriteIds:number | undefined = getFavoriteInfo().then((result) => {
+  //   return result;
+  // });
+
   return (
     <View style={cartStyles.mainCon}>
       <View style={cartStyles.imgCon}>
@@ -19,13 +27,14 @@ export default function MovieTvCart({
           style={cartStyles.img}
         />
         <Button
-          // func={() =>
-          //   addToFavorite(, {
-          //     id,
-          //   })
-          // }
+          func={() =>
+            addToFavorite(nickname, {
+              type: "movie",
+              id: id,
+            })
+          }
           // image={
-          //   ids.includes(id)
+          //   favoriteIds.includes(id)
           //     ? require("../../assets/images/favoriteActive.png")
           //     : require("../../assets/images/favorite.png")
           // }
@@ -42,7 +51,7 @@ export default function MovieTvCart({
         <Link
           href={{
             pathname: "/(tabs)/details",
-            params: { id: id },
+            params: { type: "movie", id: id },
           }}
         >
           <Text style={cartStyles.title} numberOfLines={2}>

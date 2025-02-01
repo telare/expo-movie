@@ -16,6 +16,7 @@ export default function PersonalInfo() {
         setUserInfo(JSON.parse(result));
       }
     });
+    console.log(userInfo?.photoUrl)
   }, []);
  
   const userData: {
