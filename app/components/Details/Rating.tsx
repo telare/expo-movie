@@ -3,12 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import Button from "../Button";
 import { useContext, useState } from "react";
 import { paramsContext } from "@/app/(tabs)/details";
+import { showToast } from "@/notifConfig";
 
 export default function Rating() {
   const params = useContext(paramsContext);
   const [rating, setRating] = useState<number>(5.0);
   const [addRating] = useAddRatingMutation();
- 
+
   function IncreaseRating() {
     if (rating !== 10.0) {
       setRating((prev) => parseFloat((prev + 0.5).toFixed(1)));
@@ -22,7 +23,23 @@ export default function Rating() {
   function submitRating() {
     const id: number = params.id;
     const type = params.type;
-    addRating({ id: id, to: type, body: { value: rating } });
+
+    addRating({ id: id, to: type, body: { value: rating } })
+      .unwrap()
+      .then(() => {
+        showToast({
+          message: "Rating added succesfully!",
+          position: "top",
+          type: "success",
+        });
+      })
+      .catch(() => {
+        showToast({
+          message: "Error in adding a rating operation",
+          position: "top",
+          type: "error",
+        });
+      });
   }
 
   return (

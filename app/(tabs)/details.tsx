@@ -3,6 +3,7 @@ import Info from "../components/Details/Info";
 import Rating from "../components/Details/Rating";
 import { useSearchParams } from "expo-router/build/hooks";
 import { createContext } from "react";
+import Toast from "react-native-toast-message";
 type Params = {
   type: string;
   id: number;
@@ -23,6 +24,10 @@ export default function Details() {
           }}
         >
           <View style={detailsStyles.mainCon}>
+            <View style={{ zIndex: 9999 }}>
+              <Toast />
+            </View>
+
             <Info />
             {type !== "person" && <Rating />}
           </View>

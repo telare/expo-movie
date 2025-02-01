@@ -7,8 +7,8 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <StatusBar style="light" />
+     
       <Stack>
-        
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="index"
