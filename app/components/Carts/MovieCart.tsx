@@ -2,7 +2,7 @@ import { Movie } from "@/dataFetching.ts/APISlice";
 import { Link } from "expo-router";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Button from "../Button";
-import getFavoriteInfo, { addToFavorite } from "@/supabaseConfig";
+import  { addToFavorite } from "@/supabaseConfig";
 
 export default function MovieTvCart({
   id,

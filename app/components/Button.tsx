@@ -10,6 +10,8 @@ import {
 type Btn = {
   title?: string;
   image?: ImageSourcePropType;
+  imageH?: DimensionValue;
+  imageW?: DimensionValue;
   width: DimensionValue;
   height: DimensionValue;
   fontSize?: number;
@@ -25,7 +27,15 @@ type Btn = {
   func: () => void;
 };
 
-export default function Button({ func, image, title, fontSize, ...rest }: Btn) {
+export default function Button({
+  func,
+  image,
+  imageH,
+  imageW,
+  title,
+  fontSize,
+  ...rest
+}: Btn) {
   return (
     <TouchableOpacity
       style={[
@@ -36,7 +46,12 @@ export default function Button({ func, image, title, fontSize, ...rest }: Btn) {
       ]}
       onPress={func}
     >
-      {image && <Image style={btnStyles.image} source={image} />}
+      {image && (
+        <Image
+          style={{ width: imageW ? imageW : 35, height: imageH ? imageH : 35 }}
+          source={image}
+        />
+      )}
       {title && (
         <Text style={[{ fontSize: fontSize ? fontSize : 10 }, btnStyles.text]}>
           {title}
@@ -59,8 +74,5 @@ const btnStyles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Inter_24pt-Regular.ttf",
   },
-  image: {
-    width: 35,
-    height: 35,
-  },
+  
 });
