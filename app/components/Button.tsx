@@ -14,6 +14,7 @@ type Btn = {
   imageW?: DimensionValue;
   width: DimensionValue;
   height: DimensionValue;
+  color?: string;
   fontSize?: number;
   backgroundColor?: string;
   borderRadius?: number;
@@ -31,6 +32,7 @@ export default function Button({
   func,
   image,
   imageH,
+  color,
   imageW,
   title,
   fontSize,
@@ -53,7 +55,15 @@ export default function Button({
         />
       )}
       {title && (
-        <Text style={[{ fontSize: fontSize ? fontSize : 10 }, btnStyles.text]}>
+        <Text
+          style={[
+            btnStyles.text,
+            {
+              fontSize: fontSize ? fontSize : 10,
+              color: color ? color : "white",
+            },
+          ]}
+        >
           {title}
         </Text>
       )}
@@ -70,9 +80,7 @@ const btnStyles = StyleSheet.create({
 
   text: {
     textAlign: "center",
-    color: "white",
     fontWeight: "600",
     fontFamily: "Inter_24pt-Regular.ttf",
   },
-  
 });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Button from "./Button";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -8,14 +8,20 @@ type Slider = {
 };
 
 export default function ImgCarousel({ images }: Slider) {
-  const [currentImgIndex, setCurrentImgIndex] = useState<number>(1);
+  const [currentImgIndex, setCurrentImgIndex] = useState<number>(0);
+
+  const sliderLength: number = images.length <= 4 ? images.length : 4;
 
   function handleCarouselSideClick(direction: "right" | "left") {
-    if (currentImgIndex >= 0 && currentImgIndex <= 2) {
+    if (currentImgIndex >= 0 && currentImgIndex <= sliderLength - 1) {
       if (direction == "left") {
         setCurrentImgIndex(currentImgIndex > 0 ? currentImgIndex - 1 : 0);
       } else {
-        setCurrentImgIndex(currentImgIndex !== 2 ? currentImgIndex + 1 : 2);
+        setCurrentImgIndex(
+          currentImgIndex !== sliderLength - 1
+            ? currentImgIndex + 1
+            : sliderLength - 1
+        );
       }
     }
   }
@@ -29,9 +35,11 @@ export default function ImgCarousel({ images }: Slider) {
       >
         <Image
           style={ImgCarouselStyles.carouselImg}
-          // source={images[currentImgIndex]}
-          source={{ uri: images[currentImgIndex] }}
+          source={{
+            uri: images[currentImgIndex],
+          }}
         />
+
         <View style={ImgCarouselStyles.btnsCon}>
           <Button
             title="<"
@@ -52,7 +60,7 @@ export default function ImgCarousel({ images }: Slider) {
       </GestureRecognizer>
 
       <View style={ImgCarouselStyles.paginationCon}>
-        {Array(3)
+        {Array(sliderLength)
           .fill(0)
           .map((_, i) => (
             <TouchableOpacity

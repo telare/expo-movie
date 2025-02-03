@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router";
 import BottomTab from "../components/BottomBar";
 import Header from "../components/Header";
-import Button from "../components/Button";
 export default function TabLayout() {
   const tabs: string[] = [
     "home",
@@ -16,40 +15,36 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: () => <Header isMenuBtn={true} title="Expo movie" />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           headerShown: true,
-          header: () => (
-            <Header
-              isNavBtn={true}
-              title="Profile"
-            />
-          ),
+          header: () => <Header isMenuBtn={false} title="Profile" />,
         }}
       />
       <Tabs.Screen
         name="search_results"
         options={{
           headerShown: true,
-          header: () => <Header isNavBtn={true} />,
+          header: () => <Header isMenuBtn={false} />,
         }}
       />
       <Tabs.Screen
         name="details"
         options={{
           headerShown: true,
-          header: () => <Header isNavBtn={true} />,
+          header: () => <Header isMenuBtn={false} title="Details" />,
         }}
       />
       <Tabs.Screen
         name="error"
         options={{
           headerShown: true,
-          header: () => <Header isNavBtn={true} title="Ups..." />,
+          header: () => <Header isMenuBtn={false} title="Ups..." />,
         }}
       />
       <Tabs.Screen

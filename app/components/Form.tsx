@@ -1,9 +1,10 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StyleSheet, View } from "react-native";
+import {  View } from "react-native";
 import SignUp from "./Forms/SignUp";
 import LogIn from "./Forms/LogIn";
+import {formStyles} from "../../assets/styles/shared/form"
 export const FormSchema = z.object({
   nickName: z
     .string()
@@ -25,7 +26,7 @@ export default function Form({ type }: FormProp) {
   
 
   return (
-    <View style={FormStyles.formCon}>
+    <View style={formStyles.formCon}>
       <FormProvider {...methods}>
         {type == "signup" ? <SignUp /> : <LogIn/>}
       </FormProvider>
@@ -33,38 +34,4 @@ export default function Form({ type }: FormProp) {
   );
 }
 
-export const FormStyles = StyleSheet.create({
-  formCon: {
-    backgroundColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-  fieldCon: {
-    marginBottom: 10,
-  },
-  inputLabel: {
-    color: "#96ACB7",
-    fontSize: 25,
-    fontWeight: "600",
-    paddingLeft: 16,
-    fontFamily: "Inter_24pt-Regular.ttf",
-  },
-  input: {
-    backgroundColor: "#96ACB7",
-    color: "black",
-    borderRadius: 13,
-    width: 351,
-    fontSize: 20,
-    height: 57,
-    padding: 16,
-    fontFamily: "Inter_24pt-Regular.ttf",
-  },
-  error: {
-    color: "red",
-    fontSize: 16,
-    fontWeight: "600",
-    paddingLeft: 16,
-    fontFamily: "Inter_24pt-Regular.ttf",
-  },
-});
+

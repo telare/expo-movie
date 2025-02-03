@@ -39,7 +39,7 @@ export default function TvCart({
 
           width={30}
           height={35}
-          backgroundColor="black"
+          backgroundColor={undefined}
           position="absolute"
           top={10}
           right={10}

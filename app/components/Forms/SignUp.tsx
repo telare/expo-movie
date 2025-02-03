@@ -1,5 +1,5 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { FormT, FormStyles } from "../Form";
+import { Text, TextInput, View } from "react-native";
+import { FormT } from "../Form";
 import { useFormContext } from "react-hook-form";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
@@ -7,6 +7,9 @@ import { useRouter } from "expo-router";
 import Button from "../Button";
 import { registerUser } from "@/supabaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { showToast } from "@/notifConfig";
+import { textStyles } from "@/assets/styles/shared/text";
+import { formStyles } from "@/assets/styles/shared/form";
 
 export default function SignUp() {
   const router = useRouter();
@@ -22,22 +25,27 @@ export default function SignUp() {
             email: data.email,
           })
         );
+        AsyncStorage.setItem(
+          "userNickName",
+          data.nickName ? data.nickName : "user"
+        );
         registerUser({
           nickname: data.nickName ? data.nickName : "user",
           email: data.email,
         });
       })
-      .then(() =>
-        AsyncStorage.setItem(
-          "userNickName",
-          data.nickName ? data.nickName : "user"
-        )
+      .then(() =>{
+        showToast({
+          message: "Successfully signed in!",
+          type: "success",
+          position: "top",
+        })
+        setTimeout(() => {
+          router.replace("/(tabs)/home")
+        }, 4000)}
       )
-      .then(() => router.replace("/(tabs)/home"))
       .catch((error) => {
-        const errorCode: string = error.code;
-        const errorMessage: string = error.message;
-        console.log(errorCode, errorMessage);
+        showToast({ message: error.message, type: "error", position: "top" });
       });
   }
   const {
@@ -48,46 +56,46 @@ export default function SignUp() {
   } = useFormContext<FormT>();
   return (
     <View>
-      <View style={FormStyles.fieldCon}>
-        <Text style={FormStyles.inputLabel}>NickName</Text>
+      <View style={formStyles.fieldCon}>
         <TextInput
-          placeholder="simon12"
-          style={FormStyles.input}
+          placeholder="Name"
+          style={formStyles.input}
           {...register("nickName")}
           onChangeText={(nickName) => setValue("nickName", nickName)}
         />
+
+        {errors.nickName && (
+          <Text style={textStyles.fieldError}>{errors.nickName.message}</Text>
+        )}
       </View>
-      {errors.nickName && (
-        <Text style={FormStyles.error}>{errors.nickName.message}</Text>
-      )}
-      <View style={FormStyles.fieldCon}>
-        <Text style={FormStyles.inputLabel}>Email</Text>
+      <View style={formStyles.fieldCon}>
         <TextInput
-          placeholder="example@gmail.com"
-          style={FormStyles.input}
+          placeholder="Email"
+          style={formStyles.input}
           {...register("email")}
           onChangeText={(email) => setValue("email", email)}
         />
+
+        {errors.email && (
+          <Text style={textStyles.fieldError}>{errors.email.message}</Text>
+        )}
       </View>
-      {errors.email && (
-        <Text style={FormStyles.error}>{errors.email.message}</Text>
-      )}
-      <View style={FormStyles.fieldCon}>
-        <Text style={FormStyles.inputLabel}>Password</Text>
+      <View style={formStyles.fieldCon}>
         <TextInput
           secureTextEntry={true}
-          placeholder="secure_password)1234"
+          placeholder="Password"
           textContentType="password"
-          style={FormStyles.input}
+          style={formStyles.input}
           {...register("password")}
           onChangeText={(password) => setValue("password", password)}
         />
+
+        {errors.password && (
+          <Text style={textStyles.fieldError}>{errors.password.message}</Text>
+        )}
       </View>
-      {errors.password && (
-        <Text style={FormStyles.error}>{errors.password.message}</Text>
-      )}
       <Button
-        title="Sign Up"
+        title="Create account"
         fontSize={25}
         height={50}
         backgroundColor="#6C47DB"
@@ -95,6 +103,22 @@ export default function SignUp() {
         borderRadius={10}
         func={handleSubmit(sumbitData)}
       />
+      <Text style={[textStyles.text, { fontSize: 15 }]}>
+        Do you have account?{" "}
+        <Button
+          title="Log In"
+          fontSize={15}
+          height={35}
+          width={55}
+          borderRadius={10}
+          color="#6C47DB"
+          func={() =>
+            router.push({
+              pathname: "/screens/login",
+            })
+          }
+        />{" "}
+      </Text>
     </View>
   );
 }

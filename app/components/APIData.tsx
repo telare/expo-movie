@@ -53,19 +53,22 @@ export default function APIdata({ title, content }: APIdataProps) {
               title={movie.title}
               poster_path={movie.poster_path}
               vote_average={movie.vote_average}
-              nickname={nickName?nickName:""}
+              nickname={nickName ? nickName : ""}
             />
           ))}
         {isPerson(content) &&
-          content.map((person) => (
-            <PersonCart
-              key={person.id}
-              id={person.id}
-              name={person.name}
-              profile_path={person.profile_path}
-              nickname={nickName?nickName:""}
-            />
-          ))}
+          content.map(
+            (person) =>
+              person.profile_path !== null && (
+                <PersonCart
+                  key={person.id}
+                  id={person.id}
+                  name={person.name}
+                  profile_path={person.profile_path}
+                  nickname={nickName ? nickName : ""}
+                />
+              )
+          )}
         {isTv(content) &&
           content.map((tv) => (
             <TvCart
@@ -74,7 +77,7 @@ export default function APIdata({ title, content }: APIdataProps) {
               name={tv.name}
               poster_path={tv.poster_path}
               vote_average={tv.vote_average}
-              nickname={nickName?nickName:""}
+              nickname={nickName ? nickName : ""}
             />
           ))}
       </View>

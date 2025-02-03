@@ -1,9 +1,9 @@
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { DimensionValue, StyleSheet, View } from "react-native";
+import { DimensionValue, View } from "react-native";
 import Button from "../Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z, ZodType } from "zod";
-
+import { formStyles } from "@/assets/styles/shared/form";
 type Form = {
   onSubmit: <T extends FieldValues>(data: T) => void;
   children: React.ReactNode[] | React.ReactNode;
@@ -24,8 +24,6 @@ export default function Form({
   flex,
   schema,
 }: Form) {
-  
-
   type Schema = z.infer<typeof schema>;
 
   const methods = useForm<Schema>({
@@ -35,7 +33,7 @@ export default function Form({
 
   return (
     <FormProvider {...methods}>
-      <View style={[FormStyles.formCon, { height: height, flex: flex }]}>
+      <View style={[formStyles.formCon, { height: height, flex: flex }]}>
         {children}
         <Button
           func={handleSubmit((data: Schema) => {
@@ -52,11 +50,3 @@ export default function Form({
     </FormProvider>
   );
 }
-const FormStyles = StyleSheet.create({
-  formCon: {
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "95%",
-  },
-});

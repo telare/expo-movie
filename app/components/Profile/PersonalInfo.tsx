@@ -16,7 +16,6 @@ export default function PersonalInfo() {
         setUserInfo(JSON.parse(result));
       }
     });
-    console.log(userInfo?.photoUrl)
   }, []);
  
   const userData: {
@@ -31,7 +30,7 @@ export default function PersonalInfo() {
       <Image
         style={profileStyles.image}
         source={
-          userInfo
+          userInfo?.photoUrl 
             ? { uri: userInfo.photoUrl }
             : require("../../../assets/images/user.png")
         }

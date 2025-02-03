@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "592671068353",
+    "project_id": "e-movie-bb331",
+    "storage_bucket": "e-movie-bb331.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592671068353:android:446227e3f89c87f9494440",
+        "android_client_info": {
+          "package_name": "com.rnmovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592671068353-fk4ki5onj64srrt5p7sji16qn8iqkqsq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rnmovie",
+            "certificate_hash": "13a6e8607a96a334e9eccdedf7127c699311e3d7"
+          }
+        },
+        {
+          "client_id": "592671068353-1ccfuic4evqfchuh2623vpqt05via1go.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYAP61YD-fHxIdhzeglbZ10dFcTX_gmhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592671068353-1ccfuic4evqfchuh2623vpqt05via1go.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

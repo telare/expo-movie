@@ -85,7 +85,7 @@ export default function PersonInfo() {
           </View>
           {imgs && <ImgCarousel images={imgs} />}
           <View style={{ marginTop: 40 }}>
-            <Text style={[infoStyles.title, infoStyles.text]}>Overview</Text>
+            <Text style={[infoStyles.title, infoStyles.text]}>Biography</Text>
             <Text style={infoStyles.text}>{person.biography}</Text>
           </View>
         </View>

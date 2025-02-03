@@ -7,7 +7,7 @@ export default function seacrhPage() {
     <View style={styles.mainCon}>
       <Text style={styles.text}>Find Movies, Tv series, and more..</Text>
       <Search />
-      <APIdata title="Results" type="search" />
+      {/* <APIdata title="Results" content={} /> */}
     </View>
   );
 }

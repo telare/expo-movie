@@ -1,20 +1,34 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useRouter } from "expo-router";
-import Or from "./components/Or";
 import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Text } from "react-native";
 import Button from "./components/Button";
+import Or from "./components/Or";
+import { LinearGradient } from "expo-linear-gradient";
 export default function Auth() {
   const router = useRouter();
   useEffect(() => {
-    
-    
-    // userInfo.setAuth(false);
-    // userInfo.setNickName("user");
-    // userInfo.setEmail("");
+    AsyncStorage.getItem("user")
+      .then((response) => {
+        if (response) {
+          AsyncStorage.removeItem("user");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
-  
+
   return (
-    <View style={styles.mainContainer}>
+    <LinearGradient
+      // Background Linear Gradient
+      colors={[ "#903494","#020024",]} // Gradient colors
+      start={[0.27, 0]} 
+      end={[0.65, 1]}
+      style={styles.mainContainer}
+    >
+       
       <Text style={styles.title}>Expo{"\n"}Movie</Text>
       <View>
         <Button
@@ -39,7 +53,7 @@ export default function Auth() {
           func={() => router.push("/screens/login")}
         />
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 

@@ -56,7 +56,7 @@ export default function Rating() {
         </Text>
 
         <View style={addRatingStyles.formBtnsCon}>
-          <View style={{ gap: 5 }}>
+          
             <Button
               func={IncreaseRating}
               height={25}
@@ -75,10 +75,10 @@ export default function Rating() {
               borderRadius={13}
               fontSize={25}
             />
-          </View>
+          
           <Button
             func={submitRating}
-            height={50}
+            height={40}
             width={100}
             backgroundColor="#6C47DB"
             title="Rate"
